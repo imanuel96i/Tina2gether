@@ -26,7 +26,7 @@ client.on('ready', client =>{
     //Function CodeRSS runs at minute 30, the reason why this function use cron and not setInterval is because setInterval only allows function, not a promise
     const cronCode = new CronJob('30 * * * *', () => {
         CodeRSS(client)
-    }, null, true, 'America/Los_Angeles')
+    }, null, true, 'America/Santiago')
     cronCode.start()
 })
 
