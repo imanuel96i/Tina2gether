@@ -2,12 +2,9 @@ require('dotenv').config()
 const fs = require('fs')
 const { Client, Intents, Collection } = require('discord.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
-const { DiscordTogether } = require('discord-together');
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
 const RSS = require('./activitys/rss')
-
-client.discordTogether = new DiscordTogether(client)
 
 const commandFiles = fs.readdirSync(__dirname +'/commands').filter(file => file.endsWith('.js'))
 
