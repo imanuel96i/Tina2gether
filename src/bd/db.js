@@ -1,3 +1,4 @@
+require('dotenv').config()
 const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('mydb.db', (err) => {
     if (err) {
@@ -6,11 +7,12 @@ let db = new sqlite3.Database('mydb.db', (err) => {
     console.log('Connected to the mydb database.')
 });
 
-db.run('create table if not exists krupdates (id integer, title text, link text)')
+db.run(`create table if not exists ${process.env.KRUP} (id integer, title text, link text)`)
+db.run(`create table if not exists ${process.env.NYAUP} (id integer, title text, link text)`)
 
-const insert = (data) =>{
+const insert = (data,table) =>{
     return new Promise((res, jet) =>{
-        const sql = `INSERT INTO krupdates VALUES(?, ?, ?)`
+        const sql = `INSERT INTO ${table} VALUES(?, ?, ?)`
         db.run(sql, data, function(err) {
             if (err) {
                 jet(err.message)
@@ -20,15 +22,15 @@ const insert = (data) =>{
     })
 }
 
-const select = (id) =>{
+const select = (id,table) =>{
     return new Promise((res, jet) =>{
         db.serialize(() => {
-            db.all(`SELECT * from krupdates where id=${id}`, (err, row) => {
+            db.all(`SELECT * from ${table} where id=${id}`, (err, row) => {
                 if (err) {
                     jet(err.message);
                 }else {
                     if(row[0]===null || row[0]==='' || row[0]===undefined){
-                        db.all('SELECT * from krupdates order by id desc', (err, row2) =>{
+                        db.all(`SELECT * from ${table} order by id desc`, (err, row2) =>{
                             if (err) {
                                 jet(err.message)
                             } else {
