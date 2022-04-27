@@ -21,7 +21,7 @@ for (const file of commandFiles){
 client.on('messageCreate', async message => {
     if (message.content === '-help') {
         message.reply(`** Se han actualizado los comandos por comandos con el /**\n` +
-            '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estossssssss!**')
+            '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estos!**')
     }
 })
 
