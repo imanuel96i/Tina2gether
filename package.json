@@ -4,7 +4,7 @@
   "description": "watch2gether discord bot",
   "main": "src/bot.js",
   "scripts": {
-    "start": "node src/bot.js"
+    "start": "nodemon src/bot.js"
   },
   "author": "imanuel96i",
   "license": "ISC",
@@ -18,6 +18,11 @@
     "dotenv": "^16.0.0",
     "node-sass": "^7.0.1",
     "rss-parser": "^3.12.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "translate": "^2.0.2",
+    "translatte": "^3.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }

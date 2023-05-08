@@ -5,6 +5,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
 const RSS = require('./activitys/rss')
+const translatte = require('translatte')
 
 const commandFiles = fs.readdirSync(__dirname +'/commands').filter(file => file.endsWith('.js'))
 
@@ -19,11 +20,26 @@ for (const file of commandFiles){
 }
 
 client.on('messageCreate', async message => {
-    if (message.content === '-help') {
-        message.reply(`** Se han actualizado los comandos por comandos con el /**\n` +
-            '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estos!**')
+    if (message.author.bot) {
+        console.log('Ignoring bot message!')
+    } else {
+        if (message.content === '-help') {
+            message.reply(`** Se han actualizado los comandos por comandos con el /**\n` +
+                '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estos!**')
+        }
+
+        if (message.channelId === process.env.TRANSLATE_CHID) {
+            const traducir = translatte(message.content, {from: 'pt', to: 'es'})
+            traducir.then(response => {
+                message.reply(response.text)
+            }).catch(err => {
+                message.reply(err)
+            })
+        }
     }
+    
 })
+
 
 client.on('ready', client => {
     client.user.setActivity('Use -help to provide information')
