@@ -20,15 +20,17 @@ for (const file of commandFiles){
 }
 
 client.on('messageCreate', async message => {
-    if (message.author.bot) {
-        console.log('Ignoring bot message!')
-    } else {
-        if (message.content === '-help') {
-            message.reply(`** Se han actualizado los comandos por comandos con el /**\n` +
-                '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estos!**')
-        }
-
-        if (message.channelId === process.env.TRANSLATE_CHID) {
+    if (message.channelId === process.env.TRANSLATE_CHID) {
+        if (message.author.id === process.env.PXGBOT) {
+            const traducir = translatte(message.content, {from: 'pt', to: 'es'})
+            traducir.then(response => {
+                message.reply(response.text)
+            }).catch(err => {
+                message.reply(err)
+            })
+        } else if (message.author.bot) {
+            console.log('Ignoring bot message!')
+        } else {
             const traducir = translatte(message.content, {from: 'pt', to: 'es'})
             traducir.then(response => {
                 message.reply(response.text)
@@ -37,7 +39,15 @@ client.on('messageCreate', async message => {
             })
         }
     }
-    
+        
+    if (message.author.bot) {
+        console.log('Ignoring bot message!')
+    } else {
+        if (message.content === '-help') {
+            message.reply(`** Se han actualizado los comandos por comandos con el /**\n` +
+                '**Puedes hechar un vistazo a los comandos via / con una breve descripcion de estos!**')
+        }
+    }
 })
 
 
